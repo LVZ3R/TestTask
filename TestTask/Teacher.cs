@@ -55,8 +55,18 @@ namespace TestTask
 
             iD = teacherID;
 
-            Console.WriteLine("Введiть дату народження у форматi ДД/ММ/РРРР:");
-            DateOfBirth = Console.ReadLine();
+            int day, month, year;
+            Console.WriteLine("Введiть дату народження");
+            Console.Write("\tДень: ");
+            day = Convert.ToInt32(Console.ReadLine());
+            if (day > 31 || day <= 0) throw new Exception("Неможливе значення");
+            Console.Write("\tМiсяць: ");
+            month = Convert.ToInt32(Console.ReadLine());
+            if (month <= 0 || month > 12) throw new Exception("Неможливе значення");
+            Console.Write("\tРiк: ");
+            year = Convert.ToInt32(Console.ReadLine());
+            if (year <= 0 || year >= DateTime.Today.Year) throw new Exception("Неможливе значення");
+            this.DateOfBirth = new DateTime(year, month, day);
 
             Console.WriteLine("Вкажiть числом досвiд роботи:");
             workExp = Convert.ToInt32(Console.ReadLine());
@@ -75,7 +85,7 @@ namespace TestTask
         {
             String infoStr = ": " + FirstName + " " + LastName + ", " + gender + "\n";
             infoStr += "Стаж: " + workExp + ", кiлькiсть предметiв: " + (lessons.Count()) + "\n";
-            infoStr += "Дата народження: " + DateOfBirth;
+            infoStr += "Дата народження: " + DateOfBirth.ToShortDateString();
             infoStr += "\nПредмети:\n";
 
             for (int i = 0; i < lessons.Count; i++)

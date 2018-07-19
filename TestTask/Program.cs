@@ -14,7 +14,7 @@ namespace TestTask
     {
         public String FirstName { get; set; }
         public String LastName { get; set; }
-        public String DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public enum Gender
         {
             Чоловiк,

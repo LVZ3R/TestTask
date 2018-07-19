@@ -45,7 +45,6 @@ namespace TestTask
             iD = studentID;
 
             Console.WriteLine("Введiть дату народження у форматi ДД/ММ/РРРР:");
-            DateOfBirth = Console.ReadLine();
 
             Console.WriteLine("Вкажiть числом курс, на якому навчається студент:");
             Course = Convert.ToInt32(Console.ReadLine());
