@@ -8,7 +8,6 @@ namespace TestTask
 {
     public class Teacher : Person
     {
-        public int iD { get; set; }
         public int workExp { get; set; }
         public Gender gender;
         private List<String> lessons = new List<String>(0);
@@ -25,7 +24,7 @@ namespace TestTask
             }
         }
 
-        public void teacherEditor(int teacherID)
+        public void teacherEditor()
         {
             Console.Clear();
             Console.WriteLine("Введiть iм'я, прiзвище та стать викладача з нової стрiчки:");
@@ -52,8 +51,6 @@ namespace TestTask
             }
             else
                 throw new Exception("Такої статi не iснує");
-
-            iD = teacherID;
 
             int day, month, year;
             Console.WriteLine("Введiть дату народження");

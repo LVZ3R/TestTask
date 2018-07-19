@@ -4,10 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/*  Пофиксить индексы
- *  Дописать эдиты для преподователей и студентов
- *  Доделать удаление
-*/
 namespace TestTask
 {
     public class Person
@@ -28,7 +24,6 @@ namespace TestTask
         {
             List<Teacher> teachers = new List<Teacher>(0);
             List<Student> students = new List<Student>(0);
-            int teacherID = 0, studentID = 0;
 
             int userChoise;
             bool appIsRunning = true;
@@ -36,15 +31,15 @@ namespace TestTask
             while (appIsRunning)
             {
                 Console.Clear();
-                Console.WriteLine("1 - Додати нового викладача [DONE]");
-                Console.WriteLine("2 - Додати нового студента [DONE]");
-                Console.WriteLine("3 - Вивести всiх викладачiв [DONE]");
-                Console.WriteLine("4 - Вивести всiх студентiв [DONE]");
-                Console.WriteLine("5 - Видалити викладача [DONE]");
-                Console.WriteLine("6 - Видалити студента [DONE]");
-                Console.WriteLine("7 - Вiдредагувати данi викладача [WORKING ON]");
-                Console.WriteLine("8 - Вiдредагувати данi студента [WORKING ON]");
-                Console.WriteLine("9 - Вивести список студентiв в алфавiтному порядку [DONE]");
+                Console.WriteLine("1 - Додати нового викладача");
+                Console.WriteLine("2 - Додати нового студента\n");
+                Console.WriteLine("3 - Вивести всiх викладачiв");
+                Console.WriteLine("4 - Вивести всiх студентiв\n");
+                Console.WriteLine("5 - Видалити викладача");
+                Console.WriteLine("6 - Видалити студента\n");
+                Console.WriteLine("7 - Вiдредагувати данi викладача");
+                Console.WriteLine("8 - Вiдредагувати данi студента\n");
+                Console.WriteLine("9 - Вивести список студентiв в алфавiтному порядку\n");
                 Console.WriteLine("10 - Вихiд");
                 try
                 {
@@ -53,17 +48,16 @@ namespace TestTask
                     {
                         case 1:
                             Teacher newTeacher = new Teacher();
-                            newTeacher.teacherEditor(teacherID);
+                            newTeacher.teacherEditor();
                             teachers.Add(newTeacher);
-                            teacherID++;
                             break;
                         case 2:
                             Student newStudent = new Student();
-                            newStudent.studentEditor(studentID);
+                            newStudent.studentEditor();
                             students.Add(newStudent);
-                            studentID++;
                             break;
                         case 3:
+                            Console.Clear();
                             for (int i = 0; i < teachers.Count; i++)
                             {
                                 Console.WriteLine(i + " " + teachers[i].ToString() + "\n");
@@ -71,6 +65,7 @@ namespace TestTask
                             Console.ReadLine();
                             break;
                         case 4:
+                            Console.Clear();
                             for (int i = 0; i < students.Count; i++)
                             {
                                 Console.WriteLine(i + " " + students[i].ToString() + "\n");
@@ -86,18 +81,22 @@ namespace TestTask
                             students.RemoveAt(Convert.ToInt32(Console.ReadLine()));
                             break;
                         case 7:
-                            //TODO
+                            Console.WriteLine("Введiть ID викладача:");
+                            teachers[Convert.ToInt32(Console.ReadLine())].teacherEditor();
                             break;
                         case 8:
-                            //TODO
+                            Console.WriteLine("Введiть ID студента:");
+                            students[Convert.ToInt32(Console.ReadLine())].studentEditor();
                             break;
                         case 9:
                             var sortedStudents = from s in students
                                                  orderby s.LastName ascending
                                                  select s;
+                            int sID = 0;
                             foreach(Student s in sortedStudents)
                             {
-                                Console.WriteLine(s.iD + " " + s.ToString() + "\n");
+                                Console.WriteLine(sID + s.ToString() + "\n");
+                                sID++;
                             }
                             Console.ReadLine();
                             break;
