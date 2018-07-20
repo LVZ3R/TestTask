@@ -6,18 +6,6 @@ using System.Threading.Tasks;
 
 namespace TestTask
 {
-    public class Person
-    {
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public enum Gender
-        {
-            Чоловiк,
-            Жiнка
-        }
-    }
-
     class Program
     {
         static void Main(string[] args)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestTask
 {
-    public class Teacher : Person
+    class Teacher : Person
     {
         public int workExp { get; set; }
         public Gender gender;
