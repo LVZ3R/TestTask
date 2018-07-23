@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TestTask
@@ -33,6 +34,11 @@ namespace TestTask
             FirstName = FirstName.Replace('?', 'і');
             LastName = Console.ReadLine();
             LastName = LastName.Replace('?', 'і');
+            if (Regex.Match(FirstName, @"[^a-zA-Zа-яА-Я]").Success ||
+                Regex.Match(LastName, @"[^a-zA-Za-яА-Я]").Success)
+            {
+                throw new Exception("Стрiчка може мiстити тiльки символи латиницi або кирилицi");
+            }
 
             String gender = Console.ReadLine();
             gender = gender.ToLower();
@@ -63,7 +69,7 @@ namespace TestTask
             Console.Write("\tРiк: ");
             year = Convert.ToInt32(Console.ReadLine());
             if (year <= 0 || year >= DateTime.Today.Year) throw new Exception("Неможливе значення");
-            this.DateOfBirth = new DateTime(year, month, day);
+            DateOfBirth = new DateTime(year, month, day);
 
             Console.WriteLine("Вкажiть числом досвiд роботи:");
             workExp = Convert.ToInt32(Console.ReadLine());
