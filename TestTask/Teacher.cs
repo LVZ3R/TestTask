@@ -10,66 +10,32 @@ namespace TestTask
     class Teacher : Person
     {
         public int workExp { get; set; }
-        public Gender gender;
+        //public Gender gender;
         private List<String> lessons = new List<String>(0);
 
-        public void removeLesson(String lessonName)
+        public Teacher() { }
+
+        public Teacher(String fName, String lName, Gender sex, DateTime dateOfBirth, int workExp, List<String> lessons)
         {
-            for (int i = 0; i < lessons.Count; i++)
+            try
             {
-                if (lessons[i] == lessonName)
-                {
-                    lessons.RemoveAt(i);
-                    break;
-                }
+                FirstName = fName;
+                LastName = lName;
+                gender = sex;
+                this.DateOfBirth = dateOfBirth;
+                this.workExp = workExp;
+                this.lessons = lessons;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("!!! Error: " + ex.Message);
             }
         }
 
         public void teacherEditor()
         {
             Console.Clear();
-            Console.WriteLine("Введiть iм'я, прiзвище та стать викладача з нової стрiчки:");
-
-            FirstName = Console.ReadLine();
-            FirstName = FirstName.Replace('?', 'і');
-            LastName = Console.ReadLine();
-            LastName = LastName.Replace('?', 'і');
-            if (Regex.Match(FirstName, @"[^a-zA-Zа-яА-Я]").Success ||
-                Regex.Match(LastName, @"[^a-zA-Za-яА-Я]").Success)
-            {
-                throw new Exception("Стрiчка може мiстити тiльки символи латиницi або кирилицi");
-            }
-
-            String gender = Console.ReadLine();
-            gender = gender.ToLower();
-            if (gender == "чоловiча" || gender == "чоловiк" ||
-                gender == "чолов?к" || gender == "чолов?ча" ||
-                gender == "ч")
-            {
-                this.gender = Gender.Чоловiк;
-            }
-            else
-            if (gender == "жiноча" || gender == "жiнка" ||
-                gender == "ж?нка" || gender == "ж?ноча" ||
-                gender == "ж")
-            {
-                this.gender = Gender.Жiнка;
-            }
-            else
-                throw new Exception("Такої статi не iснує");
-
-            int day, month, year;
-            Console.WriteLine("Введiть дату народження");
-            Console.Write("\tДень: ");
-            day = Convert.ToInt32(Console.ReadLine());
-            if (day > 31 || day <= 0) throw new Exception("Неможливе значення");
-            Console.Write("\tМiсяць: ");
-            month = Convert.ToInt32(Console.ReadLine());
-            if (month <= 0 || month > 12) throw new Exception("Неможливе значення");
-            Console.Write("\tРiк: ");
-            year = Convert.ToInt32(Console.ReadLine());
-            if (year <= 0 || year >= DateTime.Today.Year) throw new Exception("Неможливе значення");
-            DateOfBirth = new DateTime(year, month, day);
+            personEditor();
 
             Console.WriteLine("Вкажiть числом досвiд роботи:");
             workExp = Convert.ToInt32(Console.ReadLine());

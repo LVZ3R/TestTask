@@ -11,48 +11,33 @@ namespace TestTask
         public int numOfRecBook { get; set; }
         public int Course { get; set; }
         public int AverageGraduation { get; set; }
-        public Gender gender;
+        //public Gender gender;
+
+        public Student() { }
+
+        public Student(String fName, String lName, Gender sex, DateTime dateOfBirth, 
+            int numOfRecBook, int Course, int AverageGraduation)
+        {
+            try
+            {
+                FirstName = fName;
+                LastName = lName;
+                gender = sex;
+                this.DateOfBirth = dateOfBirth;
+                this.numOfRecBook = numOfRecBook;
+                this.Course = Course;
+                this.AverageGraduation = AverageGraduation;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("!!! Error: " + ex.Message);
+            }
+        }
 
         public void studentEditor()
         {
             Console.Clear();
-            Console.WriteLine("Введiть iм'я, прiзвище та стать студента з нової стрiчки:");
-
-            FirstName = Console.ReadLine();
-            FirstName = FirstName.Replace('?', 'і');
-            LastName = Console.ReadLine();
-            LastName = LastName.Replace('?', 'і');
-
-            String gender = Console.ReadLine();
-            gender = gender.ToLower();
-            if (gender == "чоловiча" || gender == "чоловiк" || 
-                gender == "чолов?к" || gender == "чолов?ча" ||
-                gender == "ч")
-            {
-                this.gender = Gender.Чоловiк;
-            }
-            else
-            if (gender == "жiноча" || gender == "жiнка" ||
-                gender == "ж?нка" || gender == "ж?ноча" ||
-                gender == "ж")
-            {
-                this.gender = Gender.Жiнка;
-            }
-            else
-                throw new Exception("Такої статi не iснує");
-
-            int day, month, year;
-            Console.WriteLine("Введiть дату народження");
-            Console.Write("\tДень: ");
-            day = Convert.ToInt32(Console.ReadLine());
-            if (day > 31 || day <= 0) throw new Exception("Неможливе значення");
-            Console.Write("\tМiсяць: ");
-            month = Convert.ToInt32(Console.ReadLine());
-            if (month <= 0 || month > 12) throw new Exception("Неможливе значення");
-            Console.Write("\tРiк: ");
-            year = Convert.ToInt32(Console.ReadLine());
-            if (year <= 0 || year >= DateTime.Today.Year) throw new Exception("Неможливе значення");
-            this.DateOfBirth = new DateTime(year, month, day);
+            personEditor();
 
             Console.WriteLine("Вкажiть числом курс, на якому навчається студент:");
             Course = Convert.ToInt32(Console.ReadLine());
@@ -60,6 +45,18 @@ namespace TestTask
             numOfRecBook = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Введiть середню оцiнку зi всiх предметiв: ");
             AverageGraduation = Convert.ToInt32(Console.ReadLine());
+        }
+
+        public static void studentSorter(List<Student> students)
+        {
+            var sortedStudents = students.OrderBy(o => o.LastName);
+            int sID = 0;
+            foreach (Student s in sortedStudents)
+            {
+                Console.WriteLine(sID + s.ToString() + "\n");
+                sID++;
+            }
+            Console.ReadLine();
         }
 
         public override string ToString()
