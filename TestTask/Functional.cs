@@ -12,6 +12,7 @@ namespace TestTask
         public static List<Teacher> teachers = new List<Teacher>(0);
         public static List<Student> students = new List<Student>(0);
 
+        // GENERIC ADDER
         public static void Add(object value)
         {
             if (value.GetType() == typeof(Teacher))
@@ -72,18 +73,33 @@ namespace TestTask
             Console.WriteLine("Введiть ID студента:");
             students.RemoveAt(Convert.ToInt32(Console.ReadLine()));
         }
-        
+
         // EDITORS
-        public static void editTeacher()
+        public static void Edit(int index, int sender)
         {
-            Console.WriteLine("Введiть ID викладача:");
-            teachers[Convert.ToInt32(Console.ReadLine())].teacherEditor();
+            if (sender == 7)
+            {
+                teachers[index].teacherEditor();
+            }
+            else
+                if (sender == 8)
+            {
+                students[index].studentEditor();
+            }
+            else
+                throw new Exception("Непередбачений збiй в виконаннi функцiї Edit");
         }
-        public static void editStudent()
-        {
-            Console.WriteLine("Введiть ID студента:");
-            students[Convert.ToInt32(Console.ReadLine())].studentEditor();
-        }
+
+        //public static void editTeacher()
+        //{
+        //    Console.WriteLine("Введiть ID викладача:");
+        //    teachers[Convert.ToInt32(Console.ReadLine())].teacherEditor();
+        //}
+        //public static void editStudent()
+        //{
+        //    Console.WriteLine("Введiть ID студента:");
+        //    students[Convert.ToInt32(Console.ReadLine())].studentEditor();
+        //}
         
     }
 }

@@ -15,7 +15,8 @@ namespace TestTask
             while (appIsRunning)
             {
                 Console.Clear();
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("\t[ВИКЛАДАЧI]\t\t\t\t[СТУДЕНТИ]");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.Write("1 - Додати нового викладача\t\t");
                 Console.Write("2 - Додати нового студента\n");
                 Console.Write("3 - Вивести всiх викладачiв\t\t");
@@ -34,14 +35,14 @@ namespace TestTask
                     switch (userChoise)
                     {
                         case 1:
-                            Functional.Add(new Teacher());
-                            Console.WriteLine(Functional.teachers.Count);
-                            Console.ReadKey();
+                            Teacher newTeacher = new Teacher();
+                            newTeacher.teacherEditor();
+                            Add(newTeacher);
                             break;
                         case 2:
                             Student newStudent = new Student();
                             newStudent.studentEditor();
-                            Functional.Add(newStudent);
+                            Add(newStudent);
                             break;
                         case 3:
                             teacherPrinter();
@@ -56,10 +57,12 @@ namespace TestTask
                             removeStudent();
                             break;
                         case 7:
-                            editTeacher();
+                            Console.Write("Введiть ID викладача: ");
+                            Edit(Convert.ToInt32(Console.ReadLine()), 7);
                             break;
                         case 8:
-                            editStudent();
+                            Console.Write("Введiть ID студента: ");
+                            Edit(Convert.ToInt32(Console.ReadLine()), 8);
                             break;
                         case 9:
                             Student.studentSorter(students);
