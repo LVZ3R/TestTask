@@ -12,6 +12,21 @@ namespace TestTask
         public static List<Teacher> teachers = new List<Teacher>(0);
         public static List<Student> students = new List<Student>(0);
 
+        public static void Add(object value)
+        {
+            if (value.GetType() == typeof(Teacher))
+            {
+                teachers.Add(value as Teacher);
+            }
+            else
+                if (value.GetType() == typeof(Student))
+            {
+                students.Add(value as Student);
+            }
+            else
+                throw new Exception("Недопустимий тип даних!");
+        }
+        
         // ADDERS
         public static void teacherAdder()
         {
@@ -57,7 +72,7 @@ namespace TestTask
             Console.WriteLine("Введiть ID студента:");
             students.RemoveAt(Convert.ToInt32(Console.ReadLine()));
         }
-
+        
         // EDITORS
         public static void editTeacher()
         {
@@ -69,5 +84,6 @@ namespace TestTask
             Console.WriteLine("Введiть ID студента:");
             students[Convert.ToInt32(Console.ReadLine())].studentEditor();
         }
+        
     }
 }

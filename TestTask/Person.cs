@@ -23,9 +23,10 @@ namespace TestTask
         public void personEditor()
         {
             Console.WriteLine("Введiть iм'я, прiзвище та стать з нової стрiчки:");
-
+            Console.Write("\tIм'я: ");
             FirstName = Console.ReadLine();
             FirstName = FirstName.Replace('?', 'і');
+            Console.Write("\tПрiзвище: ");
             LastName = Console.ReadLine();
             LastName = LastName.Replace('?', 'і');
             if (Regex.Match(FirstName, @"[^a-zA-Zа-яА-Я]").Success ||
@@ -34,6 +35,7 @@ namespace TestTask
                 throw new Exception("Стрiчка може мiстити тiльки символи латиницi або кирилицi");
             }
 
+            Console.Write("\tСтать: ");
             String gender = Console.ReadLine();
             gender = gender.ToLower();
             if (gender == "чоловiча" || gender == "чоловiк" ||

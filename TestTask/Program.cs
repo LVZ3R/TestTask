@@ -15,27 +15,33 @@ namespace TestTask
             while (appIsRunning)
             {
                 Console.Clear();
-                Console.WriteLine("1 - Додати нового викладача");
-                Console.WriteLine("2 - Додати нового студента\n");
-                Console.WriteLine("3 - Вивести всiх викладачiв");
-                Console.WriteLine("4 - Вивести всiх студентiв\n");
-                Console.WriteLine("5 - Видалити викладача");
-                Console.WriteLine("6 - Видалити студента\n");
-                Console.WriteLine("7 - Вiдредагувати данi викладача");
-                Console.WriteLine("8 - Вiдредагувати данi студента\n");
-                Console.WriteLine("9 - Вивести список студентiв в алфавiтному порядку\n");
-                Console.WriteLine("10 - Запустити тестовий набiр даних\n");
-                Console.WriteLine("11 - Вихiд");
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("1 - Додати нового викладача\t\t");
+                Console.Write("2 - Додати нового студента\n");
+                Console.Write("3 - Вивести всiх викладачiв\t\t");
+                Console.Write("4 - Вивести всiх студентiв\n");
+                Console.Write("5 - Видалити викладача\t\t\t");
+                Console.Write("6 - Видалити студента\n");
+                Console.Write("7 - Вiдредагувати данi викладача\t");
+                Console.Write("8 - Вiдредагувати данi студента\n\n");
+                Console.Write("9 - Вивести список студентiв в алфавiтному порядку\n");
+                Console.Write("10 - Запустити тестовий набiр даних\n");
+                Console.Write("11 - Вихiд\n\n-> ");
+                Console.ForegroundColor = ConsoleColor.White;
                 try
                 {
                     userChoise = Convert.ToInt32(Console.ReadLine());
                     switch (userChoise)
                     {
                         case 1:
-                            teacherAdder();
+                            Functional.Add(new Teacher());
+                            Console.WriteLine(Functional.teachers.Count);
+                            Console.ReadKey();
                             break;
                         case 2:
-                            studentAdder();
+                            Student newStudent = new Student();
+                            newStudent.studentEditor();
+                            Functional.Add(newStudent);
                             break;
                         case 3:
                             teacherPrinter();
@@ -62,8 +68,8 @@ namespace TestTask
                             Console.Clear();
                             List<Student> testListOfStudents = new List<Student>() {
                                 new Student("Владислав",    "Антонов", Person.Gender.Чоловiк, new DateTime(1998, 11, 26), 1337, 4, 75),     // 1
-                                new Student("Ярослав",      "Гузій", Person.Gender.Чоловiк, new DateTime(1997, 11, 2), 1338, 4, 70),        // 2
-                                new Student("Ірина",        "Калиняк", Person.Gender.Жiнка, new DateTime(1998, 6, 20), 1339, 4, 90),        // 3
+                                new Student("Борис",        "Керницький", Person.Gender.Чоловiк, new DateTime(1997, 11, 2), 1338, 4, 70),   // 2
+                                new Student("Владислав",    "Андрейченко", Person.Gender.Жiнка, new DateTime(1998, 6, 20), 1339, 4, 90),    // 3
                                 new Student("Оксана",       "Дрипсяк", Person.Gender.Жiнка, new DateTime(1996, 3, 8), 1247, 5, 95),         // 4
                                 new Student("Ігор",         "Гриців", Person.Gender.Чоловiк, new DateTime(1998, 4, 22), 1340, 4, 75),       // 5
                                 new Student("Валерія",      "Студенець", Person.Gender.Жiнка, new DateTime(1994, 5, 20), 1156, 6, 90),      // 6
