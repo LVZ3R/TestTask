@@ -27,54 +27,42 @@ namespace TestTask
             else
                 throw new Exception("Недопустимий тип даних!");
         }
-        
-        // ADDERS
-        public static void teacherAdder()
-        {
-            Teacher newTeacher = new Teacher();
-            newTeacher.teacherEditor();
-            teachers.Add(newTeacher);
-        }
-        public static void studentAdder()
-        {
-            Student newStudent = new Student();
-            newStudent.studentEditor();
-            students.Add(newStudent);
-        }
 
-        // PRINTERS
-        public static void teacherPrinter()
+        // PRINTER
+        public static void Print(int sender)
         {
-            Console.Clear();
-            for (int i = 0; i < teachers.Count; i++)
+            int step = 0;
+            if (sender == 3)
             {
-                Console.WriteLine(i + " " + teachers[i].ToString() + "\n");
+                foreach (Teacher t in teachers)
+                {
+                    Console.WriteLine(step++ + " " + t.ToString() + "\n");
+                }
             }
-            Console.ReadLine();
-        }
-        public static void studentPrinter()
-        {
-            Console.Clear();
-            for (int i = 0; i < students.Count; i++)
+            else
+                if (sender == 4)
             {
-                Console.WriteLine(i + " " + students[i].ToString() + "\n");
+                foreach (Student s in students)
+                {
+                    Console.WriteLine(step++ + " " + s.ToString() + "\n");
+                }
             }
-            Console.ReadLine();
+            else
+                throw new Exception("Непередбачена помилка при виконаннi виведення");
+
+            Console.ReadKey();
         }
 
         // REMOVE
-        public static void removeTeacher()
+        public static void Remove(int sender, int index)
         {
-            Console.WriteLine("Введiть ID викладача:");
-            teachers.RemoveAt(Convert.ToInt32(Console.ReadLine()));
-        }
-        public static void removeStudent()
-        {
-            Console.WriteLine("Введiть ID студента:");
-            students.RemoveAt(Convert.ToInt32(Console.ReadLine()));
+            if (sender == 5) teachers.RemoveAt(index);
+            else if (sender == 6) students.RemoveAt(index);
+            else
+                throw new Exception("Непередбачена помилка при здiйсненнi видалення");
         }
 
-        // EDITORS
+        // EDITOR
         public static void Edit(int index, int sender)
         {
             if (sender == 7)
@@ -88,18 +76,6 @@ namespace TestTask
             }
             else
                 throw new Exception("Непередбачений збiй в виконаннi функцiї Edit");
-        }
-
-        //public static void editTeacher()
-        //{
-        //    Console.WriteLine("Введiть ID викладача:");
-        //    teachers[Convert.ToInt32(Console.ReadLine())].teacherEditor();
-        //}
-        //public static void editStudent()
-        //{
-        //    Console.WriteLine("Введiть ID студента:");
-        //    students[Convert.ToInt32(Console.ReadLine())].studentEditor();
-        //}
-        
+        }       
     }
 }

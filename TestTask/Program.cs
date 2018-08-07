@@ -45,16 +45,18 @@ namespace TestTask
                             Add(newStudent);
                             break;
                         case 3:
-                            teacherPrinter();
+                            Print(3);
                             break;
                         case 4:
-                            studentPrinter();
+                            Print(4);
                             break;
                         case 5:
-                            removeTeacher();
+                            Console.Write("Вкажiть ID викладача: ");
+                            Remove(5, Convert.ToInt32(Console.ReadLine()));
                             break;
                         case 6:
-                            removeStudent();
+                            Console.Write("Вкажiть ID студента: ");
+                            Remove(6, Convert.ToInt32(Console.ReadLine()));
                             break;
                         case 7:
                             Console.Write("Введiть ID викладача: ");
