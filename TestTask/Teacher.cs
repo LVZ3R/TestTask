@@ -10,7 +10,7 @@ namespace TestTask
     class Teacher : Person
     {
         public int workExp { get; set; }
-        //public Gender gender;
+        public Schedule ScheduleID;
         private List<String> lessons = new List<String>(0);
 
         public Teacher() { }
