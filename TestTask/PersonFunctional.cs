@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace TestTask
 {
-    class Functional
+    class PersonFunctional : IFunctional
     {
         // MAIN LISTS
         public static List<Teacher> teachers = new List<Teacher>(0);
         public static List<Student> students = new List<Student>(0);
-        public static List<Schedule> schedules = new List<Schedule>(0);
-        public static List<Group> groups = new List<Group>(0);
 
-        // GENERIC ADDER
-        public static void Add(object value)
+        // ADDER
+        public void Add(object value)
         {
             if (value.GetType() == typeof(Teacher))
             {
@@ -31,7 +29,7 @@ namespace TestTask
         }
 
         // PRINTER
-        public static void Print(int sender)
+        public void Print(int sender)
         {
             int step = 0;
             if (sender == 3)
@@ -56,7 +54,7 @@ namespace TestTask
         }
 
         // REMOVE
-        public static void Remove(int sender, int index)
+        public void Remove(int sender, int index)
         {
             if (sender == 5)
             {
@@ -72,7 +70,7 @@ namespace TestTask
         }
 
         // EDITOR
-        public static void Edit(int index, int sender)
+        public void Edit(int index, int sender)
         {
             if (sender == 7)
             {
@@ -88,12 +86,13 @@ namespace TestTask
         }
 
         // PERSON MENU
-        public static void PersonMenu()
+        public static void PersonMenu(PersonFunctional functional)
         {
             int userChoise = 0;
             bool menuIsRunning = true;
             while (menuIsRunning)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Clear();
                 Console.WriteLine("\t[ВИКЛАДАЧI]\t\t\t\t[СТУДЕНТИ]");
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -116,34 +115,34 @@ namespace TestTask
                     case 1:
                         Teacher newTeacher = new Teacher();
                         newTeacher.teacherEditor();
-                        Add(newTeacher);
+                        functional.Add(newTeacher);
                         break;
                     case 2:
                         Student newStudent = new Student();
                         newStudent.studentEditor();
-                        Add(newStudent);
+                        functional.Add(newStudent);
                         break;
                     case 3:
-                        Print(3);
+                        functional.Print(3);
                         break;
                     case 4:
-                        Print(4);
+                        functional.Print(4);
                         break;
                     case 5:
                         Console.Write("Вкажiть ID викладача: ");
-                        Remove(5, Convert.ToInt32(Console.ReadLine()));
+                        functional.Remove(5, Convert.ToInt32(Console.ReadLine()));
                         break;
                     case 6:
                         Console.Write("Вкажiть ID студента: ");
-                        Remove(6, Convert.ToInt32(Console.ReadLine()));
+                        functional.Remove(6, Convert.ToInt32(Console.ReadLine()));
                         break;
                     case 7:
                         Console.Write("Введiть ID викладача: ");
-                        Edit(Convert.ToInt32(Console.ReadLine()), 7);
+                        functional.Edit(Convert.ToInt32(Console.ReadLine()), 7);
                         break;
                     case 8:
                         Console.Write("Введiть ID студента: ");
-                        Edit(Convert.ToInt32(Console.ReadLine()), 8);
+                        functional.Edit(Convert.ToInt32(Console.ReadLine()), 8);
                         break;
                     case 9:
                         Student.studentSorter(students);
@@ -174,51 +173,6 @@ namespace TestTask
                         Student.studentSorter(testListOfStudents);
                         break;
                     case 11:
-                        menuIsRunning = false;
-                        break;
-                }
-            }
-        }
-
-        // UNIVERSITY MENU
-        public static void UniversityMenu()
-        {
-            int userChoise = 0;
-            bool menuIsRunning = true;
-            while (menuIsRunning)
-            {
-                Console.Clear();
-                Console.WriteLine("1 - Додати нову групу");
-                Console.WriteLine("2 - Додати новий розклад");
-                Console.WriteLine("3 - Вихiд з меню\n\n-> ");
-                userChoise = Convert.ToInt32(Console.ReadLine());
-
-                switch (userChoise)
-                {
-                    case 1:
-                        Console.Clear();
-                        Console.Write("Введiть назву групи: ");
-                        string groupName = Console.ReadLine();
-                        Console.Write("Введiть ID куратора: ");
-                        Group group = new Group(groupName, teachers[Convert.ToInt32(Console.ReadLine())]);
-                        groups.Add(group);
-                        break;
-                    case 2:
-                        Console.Clear();
-                        int groupID, teacherID, queueNum;
-                        String lessonName;
-                        Console.Write("Введiть ID групи: ");
-                        groupID = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Введiть ID викладача: ");
-                        teacherID = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Введiть назву предмета: ");
-                        lessonName = Console.ReadLine();
-                        Console.Write("Вкажiть номер пари: ");
-                        queueNum = Convert.ToInt32(Console.ReadLine());
-                        //Console.Write("Вкажiть день тижня: ");
-                        Schedule schedule = new Schedule(groups[groupID], teachers[teacherID], lessonName, queueNum, DayOfWeek.Monday);
-                        break;
-                    case 3:
                         menuIsRunning = false;
                         break;
                 }

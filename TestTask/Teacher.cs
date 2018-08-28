@@ -44,6 +44,7 @@ namespace TestTask
             int lessonsCount = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Введiть назви предметiв (кожний з нової стрiчки):");
 
+            lessons.Clear();
             for (int i = 0; i < lessonsCount; i++)
             {
                 lessons.Add(Console.ReadLine());
