@@ -85,6 +85,138 @@ namespace TestTask
                 throw new Exception("Непередбачений збiй в виконаннi функцiї Edit");
         }
 
+        // FIND MENU
+        public void FindByParams()
+        {
+            byte userChoise = 0;
+            bool menuIsRunning = true;
+
+            while (menuIsRunning)
+            {
+                Console.Clear();
+                Console.Write("\t[ПОШУК]\n");
+                Console.Write("1 - Пошук викладача та студента по ID\n");
+                Console.Write("2 - Пошук викладачiв по прiзвищах\n");
+                Console.Write("3 - Пошук викладачiв по iменах\n");
+                Console.Write("4 - Пошук студентiв по прiзвищах\n");
+                Console.Write("5 - Пошук студентiв по iменах\n");
+                Console.Write("6 - Пошук студентiв по курсу\n\n");
+                Console.Write("7 - Вихiд з меню\n\n-> ");
+
+                userChoise = Convert.ToByte(Console.ReadLine());
+                switch (userChoise)
+                {
+                    case 1:
+                        Console.Write("Введiть ID: ");
+                        int id = Convert.ToInt32(Console.ReadLine());
+                        FindByID(id);
+                        break;
+                    case 2:
+                        FindByName(true, teachers);
+                        break;
+                    case 3:
+                        FindByName(false, teachers);
+                        break;
+                    case 4:
+                        FindByName(true, students);
+                        break;
+                    case 5:
+                        FindByName(false, students);
+                        break;
+                    case 6:
+                        FindByCourse();
+                        break;
+                    case 7:
+                        menuIsRunning = false;
+                        break;
+                }
+            }
+        }
+
+        // пошук прізвищ та імен в списках викладачів і студентів
+        public void FindByName<T>(bool isLastName, List<T> toCompare) where T : Person
+        {
+            Console.Write("Введiть пошуковий запит: ");
+            String targetString = "";
+            targetString = Console.ReadLine();
+            if (targetString.Length < 2)
+                throw new Exception("Довжина запиту не може бути коротше двох символiв!");
+
+            List<T> partialSimilarity = new List<T>();
+            int step = 0;
+
+            Console.Clear();
+            Console.WriteLine("\tАбсолютна збiжнiсть: \n");
+            foreach (T t in toCompare)
+            {
+                if (isLastName)
+                {
+                    if (t.LastName == targetString)
+                        Console.WriteLine(step++ + ": " + t.ToString() + "\n");
+                    else
+                        if (t.LastName.Contains(targetString))
+                        partialSimilarity.Add(t);
+                }
+                else
+                {
+                    if (t.FirstName == targetString)
+                        Console.WriteLine(step++ + ": " + t.ToString() + "\n");
+                    else
+                        if (t.FirstName.Contains(targetString))
+                        partialSimilarity.Add(t);
+                }
+            }
+
+            Console.WriteLine("<-- Кiнець списку -->");
+
+            ShowPartialSimilarity(partialSimilarity);
+
+            Console.ReadKey();
+        }
+
+        // відображення знайдених збіжностей
+        private void ShowPartialSimilarity<T> (List<T> toPrint)
+        {
+            if (toPrint.Count != 0)
+            {
+                Console.Write("Бажаєте переглянути список схожих результатiв? (y/n) ");
+                char answer = Convert.ToChar(Console.ReadLine());
+                if (answer == 'y')
+                {
+                    Console.Clear();
+                    int step = 0;
+                    foreach (T t in toPrint)
+                    {
+                        Console.WriteLine(step++ + ": " + t.ToString() + "\n");
+                    }
+                }
+            }
+        }
+
+        // пошук по ID студента і викладача
+        public void FindByID(int id)
+        {
+            Console.WriteLine("Викладач" + teachers[id].ToString());
+            Console.WriteLine("Студент" + students[id].ToString());
+
+            Console.ReadKey();
+        }
+
+        // пошук студентів по курсу
+        public void FindByCourse()
+        {
+            int step = 0;
+            Console.Write("Введiть номер курсу: ");
+            int course = Convert.ToInt32(Console.ReadLine());
+            foreach(Student s in students)
+            {
+                if (s.Course == course)
+                    Console.WriteLine(step++ + " " + s.ToString() + "\n");
+            }
+
+            Console.ReadKey();
+        }
+
         // PERSON MENU
         public static void PersonMenu(PersonFunctional functional)
         {
@@ -104,9 +236,10 @@ namespace TestTask
                 Console.Write("6 - Видалити студента\n");
                 Console.Write("7 - Вiдредагувати данi викладача\t");
                 Console.Write("8 - Вiдредагувати данi студента\n\n");
-                Console.Write("9 - Вивести список студентiв в алфавiтному порядку\n");
-                Console.Write("10 - Запустити тестовий набiр даних\n");
-                Console.Write("11 - Вихiд\n\n-> ");
+                Console.Write("9 - Пошук\n\n");
+                Console.Write("10 - Вивести список студентiв в алфавiтному порядку\n");
+                Console.Write("11 - Запустити тестовий набiр даних\n");
+                Console.Write("12 - Вихiд\n\n-> ");
                 Console.ForegroundColor = ConsoleColor.White;
 
                 userChoise = Convert.ToInt32(Console.ReadLine());
@@ -145,11 +278,14 @@ namespace TestTask
                         functional.Edit(Convert.ToInt32(Console.ReadLine()), 8);
                         break;
                     case 9:
-                        Student.studentSorter(students);
+                        functional.FindByParams();
                         break;
                     case 10:
+                        Student.studentSorter(students);
+                        break;
+                    case 11:
                         Console.Clear();
-                        List<Student> testListOfStudents = new List<Student>() {
+                        students = new List<Student>() {
                                 new Student("Владислав",    "Антонов", Person.Gender.Чоловiк, new DateTime(1998, 11, 26), 1337, 4, 75),     // 1
                                 new Student("Борис",        "Керницький", Person.Gender.Чоловiк, new DateTime(1997, 11, 2), 1338, 4, 70),   // 2
                                 new Student("Владислав",    "Андрейченко", Person.Gender.Чоловiк, new DateTime(1998, 6, 20), 1339, 4, 90),    // 3
@@ -162,7 +298,7 @@ namespace TestTask
                                 new Student("Михайло",      "Яцюк", Person.Gender.Чоловiк, new DateTime(1998, 9, 1), 1350, 4, 75)           // 10
                             };
 
-                        List<Teacher> testListOfTeachers = new List<Teacher>() {
+                        teachers = new List<Teacher>() {
                                 new Teacher("Тарас", "Гайдар", Person.Gender.Чоловiк, new DateTime(1997, 9, 13), 7, new List<string>() { "Математика", "Алгебра", "Геометрія"}),
                                 new Teacher("Марина", "Франко", Person.Gender.Жiнка, new DateTime(1995, 8, 20), 3, new List<string>() { "Економіка", "Менеджмент персоналу", "Туризм"}),
                                 new Teacher("Богдан", "Кирилович", Person.Gender.Чоловiк, new DateTime(1997, 3, 31), 2, new List<string>() { "Фізичне виховання", "Воєнна підготовка"}),
@@ -170,9 +306,9 @@ namespace TestTask
                             };
 
                         Console.WriteLine("Вiдсортований набiр студентiв:\n\n");
-                        Student.studentSorter(testListOfStudents);
+                        Student.studentSorter(students);
                         break;
-                    case 11:
+                    case 12:
                         menuIsRunning = false;
                         break;
                 }

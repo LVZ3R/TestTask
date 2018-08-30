@@ -12,6 +12,7 @@ namespace TestTask
         void Print(int sender);
         void Remove(int sender, int index);
         void Edit(int sender, int index);
-        //void Find();
+        void FindByParams();
+        void FindByID(int id);
     }
 }

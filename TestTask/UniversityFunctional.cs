@@ -61,6 +61,7 @@ namespace TestTask
         // PRINTER
         public void Print(int sender)
         {
+            Console.ForegroundColor = ConsoleColor.White;
             int step = 0;
             if (sender == 3)
             {
@@ -81,6 +82,17 @@ namespace TestTask
                 throw new Exception("Помилка при виведеннi");
 
             Console.ReadKey();
+        }
+
+        // FIND
+        public void FindByParams()
+        {
+
+        }
+
+        public void FindByID(int id)
+        {
+
         }
         
         // UNIVERSITY MENU
