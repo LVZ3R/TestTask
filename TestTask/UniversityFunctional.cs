@@ -13,21 +13,18 @@ namespace TestTask
         public static List<Group> groups = new List<Group>(0);
 
         // ADDER
-        public void Add(object value)
+        public void Add<T> (T value, List<T> listToAdd)
         {
             Console.Clear();
-            if (value.GetType() == typeof(Group))
+            try
             {
+                listToAdd.Add(value);
+            }
 
-                groups.Add(value as Group);
-            }
-            else
-                if (value.GetType() == typeof(Schedule))
+            catch (Exception ex)
             {
-                schedules.Add(value as Schedule);
+                Console.WriteLine("Непередбачена помилка при створеннi об'єкта: " + ex.Message);
             }
-            else
-                throw new Exception("Непередбачена помилка");
         }
 
         // EDITOR
@@ -47,52 +44,41 @@ namespace TestTask
         }
 
         // REMOVER
-        public void Remove(int sender, int index)
+        public void Remove<T> (List<T> listToRemove, int index)
         {
-            if (sender == 5)
-            {
-                groups.RemoveAt(index);
-            }
-            else if (sender == 6) schedules.RemoveAt(index);
-            else
-                throw new Exception("Непередбачена помилка при здiйсненнi видалення");
+            listToRemove.RemoveAt(index);
         }
 
         // PRINTER
-        public void Print(int sender)
+        public void Print<T>(List<T> listToPrint)
         {
             Console.ForegroundColor = ConsoleColor.White;
             int step = 0;
-            if (sender == 3)
+            foreach (T obj in listToPrint)
             {
-                foreach (Group g in groups)
-                {
-                    Console.WriteLine(step++ + g.ToString() + "\n");
-                }
+                Console.WriteLine(step++ + obj.ToString() + "\n");
             }
-            else
-                if (sender == 4)
-            {
-                foreach (Schedule s in schedules)
-                {
-                    Console.WriteLine(step++ + s.ToString() + "\n");
-                }
-            }
-            else
-                throw new Exception("Помилка при виведеннi");
-
             Console.ReadKey();
         }
 
         // FIND
         public void FindByParams()
         {
+            Console.Clear();
+            Console.Write("\t[ПОШУК]\n");
+            Console.Write("1 - Пошук групи i розкладу по ID\n");
+            Console.Write("2 - Пошук групи по назвi\n");
+            Console.Write("3 - Пошук розкладiв по дню тижня\n");
+            Console.Write("4 - Пошук розкладiв по викладачу\n");
+            Console.Write("5 - Пошук розкладiв по предмету\n");
 
         }
 
         public void FindByID(int id)
         {
-
+            Console.WriteLine("Розклад: " + schedules[id].ToString());
+            Console.WriteLine("Група: " + groups[id].ToString());
+            Console.ReadKey();
         }
         
         // UNIVERSITY MENU
@@ -121,26 +107,26 @@ namespace TestTask
                     case 1:
                         Group newGroup = new Group();
                         newGroup.groupEditor();
-                        functional.Add(newGroup);
+                        functional.Add(newGroup, groups);
                         break;
                     case 2:
                         Schedule newSchedule = new Schedule();
                         newSchedule.scheduleEditor();
-                        functional.Add(newSchedule);
+                        functional.Add(newSchedule, schedules);
                         break;
                     case 3:
-                        functional.Print(3);
+                        functional.Print(groups);
                         break;
                     case 4:
-                        functional.Print(4);
+                        functional.Print(schedules);
                         break;
                     case 5:
                         Console.Write("Введiть ID групи: ");
-                        functional.Remove(5, Convert.ToInt32(Console.ReadLine()));
+                        functional.Remove(groups, Convert.ToInt32(Console.ReadLine()));
                         break;
                     case 6:
                         Console.Write("Введiть ID розкладу: ");
-                        functional.Remove(6, Convert.ToInt32(Console.ReadLine()));
+                        functional.Remove(schedules, Convert.ToInt32(Console.ReadLine()));
                         break;
                     case 7:
                         Console.Write("Введiть ID групи: ");

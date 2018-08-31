@@ -8,9 +8,9 @@ namespace TestTask
 {
     interface IFunctional
     {
-        void Add(object value);
-        void Print(int sender);
-        void Remove(int sender, int index);
+        void Add<T> (T value, List<T> listToAdd);
+        void Print<T> (List<T> listToPrint);
+        void Remove<T> (List<T> listToRemove, int index);
         void Edit(int sender, int index);
         void FindByParams();
         void FindByID(int id);

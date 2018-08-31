@@ -13,60 +13,35 @@ namespace TestTask
         public static List<Student> students = new List<Student>(0);
 
         // ADDER
-        public void Add(object value)
+        public void Add<T> (T value, List<T> listToAdd)
         {
-            if (value.GetType() == typeof(Teacher))
+            Console.Clear();
+            try
             {
-                teachers.Add(value as Teacher);
+                listToAdd.Add(value);
             }
-            else
-                if (value.GetType() == typeof(Student))
+
+            catch (Exception ex)
             {
-                students.Add(value as Student);
+                Console.WriteLine("Непередбачена помилка при створеннi об'єкта: " + ex.Message);
             }
-            else
-                throw new Exception("Недопустимий тип даних!");
         }
 
         // PRINTER
-        public void Print(int sender)
+        public void Print<T>(List<T> listToPrint)
         {
             int step = 0;
-            if (sender == 3)
+            foreach (T obj in listToPrint)
             {
-                foreach (Teacher t in teachers)
-                {
-                    Console.WriteLine(step++ + " " + t.ToString() + "\n");
-                }
+                Console.WriteLine(step++ + " " + obj.ToString() + "\n");
             }
-            else
-                if (sender == 4)
-            {
-                foreach (Student s in students)
-                {
-                    Console.WriteLine(step++ + " " + s.ToString() + "\n");
-                }
-            }
-            else
-                throw new Exception("Непередбачена помилка при виконаннi виведення");
-
             Console.ReadKey();
         }
 
         // REMOVE
-        public void Remove(int sender, int index)
+        public void Remove<T> (List<T> listToRemove, int index)
         {
-            if (sender == 5)
-            {
-                if (teachers[index].ScheduleID != null)
-                {
-                    teachers[index].ScheduleID.TeacherID = teachers[0];
-                }
-                teachers.RemoveAt(index);
-            }
-            else if (sender == 6) students.RemoveAt(index);
-            else
-                throw new Exception("Непередбачена помилка при здiйсненнi видалення");
+            listToRemove.RemoveAt(index);
         }
 
         // EDITOR
@@ -248,26 +223,26 @@ namespace TestTask
                     case 1:
                         Teacher newTeacher = new Teacher();
                         newTeacher.teacherEditor();
-                        functional.Add(newTeacher);
+                        functional.Add(newTeacher, teachers);
                         break;
                     case 2:
                         Student newStudent = new Student();
                         newStudent.studentEditor();
-                        functional.Add(newStudent);
+                        functional.Add(newStudent, students);
                         break;
                     case 3:
-                        functional.Print(3);
+                        functional.Print(teachers);
                         break;
                     case 4:
-                        functional.Print(4);
+                        functional.Print(students);
                         break;
                     case 5:
                         Console.Write("Вкажiть ID викладача: ");
-                        functional.Remove(5, Convert.ToInt32(Console.ReadLine()));
+                        functional.Remove(teachers, Convert.ToInt32(Console.ReadLine()));
                         break;
                     case 6:
                         Console.Write("Вкажiть ID студента: ");
-                        functional.Remove(6, Convert.ToInt32(Console.ReadLine()));
+                        functional.Remove(students, Convert.ToInt32(Console.ReadLine()));
                         break;
                     case 7:
                         Console.Write("Введiть ID викладача: ");
