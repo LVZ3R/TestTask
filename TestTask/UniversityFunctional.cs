@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static TestTask.PersonFunctional;
 
 namespace TestTask
 {
@@ -64,14 +63,96 @@ namespace TestTask
         // FIND
         public void FindByParams()
         {
-            Console.Clear();
-            Console.Write("\t[ПОШУК]\n");
-            Console.Write("1 - Пошук групи i розкладу по ID\n");
-            Console.Write("2 - Пошук групи по назвi\n");
-            Console.Write("3 - Пошук розкладiв по дню тижня\n");
-            Console.Write("4 - Пошук розкладiв по викладачу\n");
-            Console.Write("5 - Пошук розкладiв по предмету\n");
+            byte userChoise = 0;
+            bool menuIsRunning = true;
 
+            while (menuIsRunning)
+            {
+                Console.Clear();
+                Console.Write("\t[ПОШУК]\n");
+                Console.Write("1 - Пошук групи i розкладу по ID\n");
+                Console.Write("2 - Пошук групи по назвi\n");
+                Console.Write("3 - Пошук розкладiв по викладачу\n");
+                Console.Write("4 - Пошук розкладiв по предмету\n\n");
+                Console.Write("5 - Вихiд\n\n->");
+                userChoise = Convert.ToByte(Console.ReadLine());
+
+                switch (userChoise)
+                {
+                    case 1:
+                        Console.Write("Введiть ID: ");
+                        FindByID(Convert.ToInt32(Console.ReadLine()));
+                        break;
+                    case 2:
+                        FindByGroupName();
+                        break;
+                    case 3:
+                        Console.Write("Введiть прiзвище викладача: ");
+                        String targetLastName = Console.ReadLine();
+                        FindScheduleByStringParam(targetLastName);
+                        Console.ReadKey();
+                        break;
+                    case 4:
+                        Console.WriteLine("Введiть назву предмета: ");
+                        String targetLesson = Console.ReadLine();
+                        FindScheduleByStringParam(targetLesson);
+                        Console.ReadKey();
+                        break;
+                    case 5:
+                        menuIsRunning = false;
+                        break;
+                }
+            }
+        }
+
+        public void FindScheduleByStringParam(String target)
+        {           
+            int step = 0;
+
+            List<Schedule> partialSimilarity = new List<Schedule>();
+
+            Console.WriteLine("Результат пошуку: ");
+            foreach (Schedule s in schedules)
+            {
+                if (s.LessonName == target || s.TeacherID.LastName == target)
+                {
+                    Console.WriteLine(step++ + s.ToString() + "\n");
+                }
+                if(s.LessonName.Contains(target) || s.TeacherID.LastName.Contains(target))
+                {
+                    partialSimilarity.Add(s);
+                }
+            }
+            Console.WriteLine("<-- Кiнець списку -->");
+
+            if (partialSimilarity.Count != 0)
+            {
+                Console.WriteLine("Бажаєте переглянути подiбнi результати? (y/n)");
+                char answer = Convert.ToChar(Console.ReadLine());
+                if (answer == 'y')
+                {
+                    foreach (Schedule s in partialSimilarity)
+                    {
+                        Console.WriteLine(step++ + s.ToString() + "\n");
+                    }
+                }
+            }
+        }
+
+        public void FindByGroupName()
+        {
+            Console.Clear();
+            Console.Write("Введiть назву групи: ");
+            String groupName = Console.ReadLine();
+            int step = 0;
+
+            foreach (Group g in groups)
+            {
+                if (g.GroupName == groupName)
+                    Console.WriteLine(step++ + g.ToString() + "\n");
+            }
+
+            Console.ReadKey();
         }
 
         public void FindByID(int id)
@@ -99,7 +180,8 @@ namespace TestTask
                 Console.Write("6 - Видалити розклад\n");
                 Console.Write("7 - Редагувати групу\t\t");
                 Console.Write("8 - Редагувати розклад\n\n");
-                Console.Write("9 - Вихiд з меню\n\n-> ");
+                Console.Write("9 - Пошук\n\n");
+                Console.Write("10 - Вихiд з меню\n\n-> ");
                 userChoise = Convert.ToInt32(Console.ReadLine());
 
                 switch (userChoise)
@@ -137,6 +219,9 @@ namespace TestTask
                         functional.Edit(8, Convert.ToInt32(Console.ReadLine()));
                         break;
                     case 9:
+                        functional.FindByParams();
+                        break;
+                    case 10:
                         menuIsRunning = false;
                         break;
                 }
